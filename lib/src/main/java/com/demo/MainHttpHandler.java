@@ -80,9 +80,12 @@ public class MainHttpHandler implements BaseHttpHandler {
 	@Override
 	public void handleRequest(final HttpServerExchange exchange) throws Exception {
 		Map<String, Deque<String>> params = exchange.getQueryParameters();
-		Deque<String> keys = params.get("key");
-		String key = keys.getFirst();
+        String key = "none";
 		String value = "none";
+		Deque<String> keys = params.get("key");
+        if (keys != null){
+            key = keys.getFirst();
+        }
 		
 		String sql;
 		sql = "SELECT NAME FROM TEST WHERE ID = '" + key + "'";
