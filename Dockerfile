@@ -7,4 +7,4 @@ WORKDIR /app
 COPY ./ ./
 RUN ./gradlew stage
 
-CMD ["java", "-XX:+PrintCompilation", "-jar", "./lib/build/libs/all-in-one-jar.jar"]
+CMD ["java", "-server", "-XX:+PrintCompilation", "-jar", "./lib/build/libs/all-in-one-jar.jar"]
