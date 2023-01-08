@@ -15,6 +15,9 @@ repositories {
     mavenCentral()
 }
 
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
 dependencies {
 	implementation 'io.undertow:undertow-core:2.2.20.Final'
 	implementation 'io.undertow:undertow-servlet:2.2.20.Final'
