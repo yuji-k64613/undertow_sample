@@ -20,15 +20,14 @@ public class DBCPDataSource {
 	}
 
 	private DBCPDataSource() {
-		ds.setUrl("jdbc:h2:mem:test");
-		ds.setUsername("user");
-		ds.setPassword("password");
-		ds.setMinIdle(10);
-		//ds.setMaxIdle(3);
-		ds.setMaxIdle(100);
-		ds.setMaxOpenPreparedStatements(100);
+		ds.setUrl("postgres://mydb_qwhk_user:O0A7WQxaXw4fnLFzcYMKHiapusZyuPIw@dpg-cev7tbqrrk0a2joo07fg-a.oregon-postgres.render.com/mydb_qwhk");
+		ds.setUsername("mydb_qwhk_user");
+		ds.setPassword("O0A7WQxaXw4fnLFzcYMKHiapusZyuPIw");
+		ds.setMaxIdle(3);
+		ds.setMaxIdle(10);
+		ds.setMaxOpenPreparedStatements(10);
 
-		ds.setMaxTotal(100);
+		ds.setMaxTotal(10);
 		ds.setMaxWaitMillis(1000);
 
 		Connection connection;
