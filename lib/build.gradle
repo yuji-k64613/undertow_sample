@@ -28,8 +28,9 @@ dependencies {
 	implementation 'ch.qos.logback:logback-classic:1.2.6'
 
 	implementation 'org.apache.commons:commons-dbcp2:2.9.0'
-	implementation 'com.h2database:h2:2.1.214'
-
+	//implementation 'com.h2database:h2:2.1.214'
+    implementation 'org.postgresql:postgresql:42.5.1'
+                                                                                
 	implementation 'org.springframework:spring-context:5.3.24'
     
     // Use JUnit Jupiter for testing.
