@@ -2,6 +2,10 @@ package com.demo;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import java.sql.DriverManager;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -20,7 +24,7 @@ public class DBCPDataSource {
 	}
 
 	private DBCPDataSource() {
-		ds.setUrl("postgres://mydb_qwhk_user:O0A7WQxaXw4fnLFzcYMKHiapusZyuPIw@dpg-cev7tbqrrk0a2joo07fg-a.oregon-postgres.render.com/mydb_qwhk");
+		ds.setUrl("jdbc:postgresql://dpg-cev7tbqrrk0a2joo07fg-a.oregon-postgres.render.com/mydb_qwhk");
 		ds.setUsername("mydb_qwhk_user");
 		ds.setPassword("O0A7WQxaXw4fnLFzcYMKHiapusZyuPIw");
 		ds.setMaxIdle(3);
@@ -34,7 +38,23 @@ public class DBCPDataSource {
 		try {
 			connection = this.getConnection();
 	        util.setConnection(connection);
-	        String sql;
+            String sql;
+            int cnt = 0;
+            sql = "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'test'";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = null;
+            try {
+                rs = stmt.executeQuery(sql);
+                rs.next();
+				cnt = rs.getInt(1);
+                rs.close();
+            } finally {
+                stmt.close();
+            }
+            if (cnt > 0){
+                return;
+            }
+
 	        sql = "CREATE TABLE TEST (ID VARCHAR(256), NAME VARCHAR(256))";
 	        util.executeStatement(sql);
 	        sql = "INSERT INTO TEST VALUES('hello', 'world')";
