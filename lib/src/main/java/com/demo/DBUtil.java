@@ -1,27 +1,25 @@
 package com.demo;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class DBUtil {
 	private static DBUtil instance = new DBUtil();
-	private Connection connection;
+	private JedisPool pool;
 
-	public void executeStatement(String sql) throws SQLException {
-		Statement stmt = connection.createStatement();
-		stmt.execute(sql);
+	private DBUtil() {
+		pool = new JedisPool("redis://red-cf55jb5a4992g5g872t0", 6379);
+		try (Jedis jedis = pool.getResource()) {
+			jedis.set("hello", "Redis");
+			jedis.set("key", "value");
+		}
 	}
 
 	public static DBUtil getInstance() {
 		return instance;
 	}
 
-	public Connection getConnection() {
-		return connection;
-	}
-
-	public void setConnection(Connection connection) {
-		this.connection = connection;
+	public JedisPool getPool() {
+		return pool;
 	}
 }

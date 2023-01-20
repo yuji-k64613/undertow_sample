@@ -19,6 +19,8 @@ import com.demo.mat.MatTest;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class MainHttpHandler implements BaseHttpHandler {
 	final static Logger logger = LoggerFactory.getLogger(MainHttpHandler.class);
@@ -87,23 +89,10 @@ public class MainHttpHandler implements BaseHttpHandler {
             key = keys.getFirst();
         }
 		
-		String sql;
-		sql = "SELECT NAME FROM TEST WHERE ID = '" + key + "'";
-		Connection connection  = DBCPDataSource.getInstance().getConnection();
-		Statement stmt = connection.createStatement();
-		ResultSet rs = null;
-		try {
-			rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				System.out.println(rs.getString("NAME"));
-				value = rs.getString("NAME");
-				logger.info("KEY=" + key + ", VALUE=" + value);
-			}
-			rs.close();
-		} finally {
-			stmt.close();
+		JedisPool pool = DBUtil.getInstance().getPool();
+		try (Jedis jedis = pool.getResource()) {
+			value = jedis.get(key);
 		}
-        connection.close();
 
 		ByteBuffer buffer = ByteBuffer.allocate(256);
 		buffer.put(value.getBytes());
