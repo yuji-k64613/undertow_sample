@@ -89,11 +89,13 @@ public class MainHttpHandler implements BaseHttpHandler {
             key = keys.getFirst();
         }
 		
-		JedisPool pool = DBUtil.getInstance().getPool();
-		try (Jedis jedis = pool.getResource()) {
-			value = jedis.get(key);
-		}
-
+        if (key != null) {
+			JedisPool pool = DBUtil.getInstance().getPool();
+			try (Jedis jedis = pool.getResource()) {
+				value = jedis.get(key);
+			}
+        }
+        
 		ByteBuffer buffer = ByteBuffer.allocate(256);
 		buffer.put(value.getBytes());
 		buffer.flip();
