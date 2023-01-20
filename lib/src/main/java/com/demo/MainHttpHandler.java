@@ -82,7 +82,7 @@ public class MainHttpHandler implements BaseHttpHandler {
 	@Override
 	public void handleRequest(final HttpServerExchange exchange) throws Exception {
 		Map<String, Deque<String>> params = exchange.getQueryParameters();
-        String key = "none";
+        String key = null;
 		String value = "none";
 		Deque<String> keys = params.get("key");
         if (keys != null){
