@@ -7,4 +7,4 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 COPY ./ ./
 RUN ./gradlew stage
-CMD ["java", "-server", "-XX:+PrintCompilation", "-jar", "./lib/build/libs/all-in-one-jar.jar"]
+CMD ["java", "-server", "-jar", "./lib/build/libs/all-in-one-jar.jar"]
