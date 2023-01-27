@@ -11,7 +11,9 @@
     <input type="button" id="sample" value="送信">
 
     <script>
-        var sock = new WebSocket('ws://127.0.0.1:8080/chat');
+        //var sock = new WebSocket('ws://127.0.0.1:8080/chat');
+        //var sock = new WebSocket('ws://localhost:8080/chat');
+        var sock = new WebSocket('ws://undertow-sample-websocket.onrender.com/chat');
 
         // 接続
         sock.addEventListener('open',function(e){
