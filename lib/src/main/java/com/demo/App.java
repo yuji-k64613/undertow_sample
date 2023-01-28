@@ -65,8 +65,7 @@ public class App {
 					protected void onFullTextMessage(WebSocketChannel channel, BufferedTextMessage message) {
 						String msg = message.getData();
 						logger.info("WebSocket " + msg);
-						logger.info("WebSocket length=" + msg.length());
-						WebSockets.sendText("received " + msg, channel, null);
+						WebSockets.sendText(msg, channel, null);
 					}
 				});
 				channel.resumeReceives();

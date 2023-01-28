@@ -35,7 +35,8 @@
         document.addEventListener('DOMContentLoaded',function(e){
             // サーバーにデータを送る
             document.getElementById('sample').addEventListener('click',function(e){
-                sock.send('send hello');
+                sock.send('hello');
+                console.log('sent "hello"');
             });
         });
     </script>
