@@ -66,7 +66,7 @@ public class App {
 						String msg = message.getData();
 						logger.info("WebSocket " + msg);
 						logger.info("WebSocket length=" + msg.length());
-						WebSockets.sendText(msg, channel, null);
+						WebSockets.sendText("received " + msg, channel, null);
 					}
 				});
 				channel.resumeReceives();
