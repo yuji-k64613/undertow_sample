@@ -22,7 +22,15 @@
 
         // サーバーからデータを受け取る
         sock.addEventListener('message',function(e){
-            console.log(e.data);
+        	var msg = e.data;
+        	if (msg == null){
+            	console.log("null");        		
+        	}
+        	else {
+            	console.log(msg);
+            	console.log(msg.length);
+            }
+        	
         });
 
         document.addEventListener('DOMContentLoaded',function(e){

@@ -63,8 +63,10 @@ public class App {
 
 					@Override
 					protected void onFullTextMessage(WebSocketChannel channel, BufferedTextMessage message) {
-						logger.info("WebSocket " + message.getData());
-						WebSockets.sendText(message.getData(), channel, null);
+						String msg = message.getData();
+						logger.info("WebSocket " + msg);
+						logger.info("WebSocket length=" + msg.length());
+						WebSockets.sendText(msg, channel, null);
 					}
 				});
 				channel.resumeReceives();
