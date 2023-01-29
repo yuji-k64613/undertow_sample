@@ -1,44 +1,86 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<html>
+<head><title>Undertow Chat</title>
+<script>
+    var socket;
+    if (window.WebSocket) {
+        //socket = new WebSocket("ws://localhost:8080/chat");
+        sock = new WebSocket('wss://undertow-sample-websocket.onrender.com/chat');
+        socket.onmessage = function (event) {
+            var chat = document.getElementById('chat');
+            chat.innerHTML = chat.innerHTML + event.data + "<br />";
+        };
+    } else {
+        alert("Your browser does not support Websockets. (Use Chrome)");
+    }
+
+    function send(message) {
+        if (!window.WebSocket) {
+            return false;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(message);
+        } else {
+            alert("The socket is not open.");
+        }
+        return false;
+    }
+</script>
+<style type="text/css">
+    html,body {width:100%;height:100%;}
+    html,body,ul,ol,dl,li,dt,dd,p,blockquote,fieldset,legend,img,form,h1,h2,h3,h4,h5,h6 {margin:0;padding:0;}
+    body {
+        font:normal 12px/1.5 Arial,Helvetica,'Bitstream Vera Sans',sans-serif;
+        background: #c5deea; /* Old browsers */
+        background: -moz-linear-gradient(top, #c5deea 0%, #066dab 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #c5deea), color-stop(100%, #066dab)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #c5deea 0%, #066dab 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #c5deea 0%, #066dab 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #c5deea 0%, #066dab 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #c5deea 0%, #066dab 100%); /* W3C */
+        height: 90%;
+    }
+
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+        background: white;
+    }
+
+    .chatform {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+        width: 70%;
+    }
+    form{
+        width: 100%;
+    }
+    label{
+        display: inline;
+        width: 100px;
+    }
+    #msg{
+        display: inline;
+        width: 100%;
+    }
+
+</style>
 </head>
 <body>
+<div class="page">
+    <div class="center" >
+        <h1>Web Socket Chat</h1>
+        <div id="chat" style="height:100%;width: 100%; overflow: scroll;">
 
-    <input type="button" id="sample" value="送信">
 
-    <script>
-        //var sock = new WebSocket('ws://127.0.0.1:8080/chat');
-        //var sock = new WebSocket('ws://localhost:8080/chat');
-        var sock = new WebSocket('wss://undertow-sample-websocket.onrender.com/chat');
+        </div>
 
-        // 接続
-        sock.addEventListener('open',function(e){
-            console.log('Socket 接続成功');
-        });
-
-        // サーバーからデータを受け取る
-        sock.addEventListener('message',function(e){
-        	var msg = e.data;
-        	if (msg == null){
-            	console.log("null");        		
-        	}
-        	else {
-            	console.log(msg);
-            }
-        	
-        });
-
-        document.addEventListener('DOMContentLoaded',function(e){
-            // サーバーにデータを送る
-            document.getElementById('sample').addEventListener('click',function(e){
-                sock.send('hello');
-                console.log('sent "hello"');
-            });
-        });
-    </script>
+        <form onsubmit="return false;" class="chatform" action="">
+            <label for="msg">Message</label>
+            <input type="text" name="message" id="msg"  onkeypress="if(event.keyCode==13) { send(this.form.message.value); this.value='' } " />
+        </form>
+    </div>
+</div>
 </body>
 </html>
