@@ -26,7 +26,8 @@ public class Scheduler {
 				executor.submit(new LongRunningTask());
 			}
 		};
-		timer.schedule(task, 0, 60 * 60 * 1000);
+		//timer.schedule(task, 0, 60 * 60 * 1000);
+		timer.schedule(task, 0, 30 * 60 * 1000);
 	}
 
 }
