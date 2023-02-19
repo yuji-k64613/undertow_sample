@@ -18,15 +18,15 @@ public class Scheduler {
 
 		TimerTask task = new TimerTask() {
 			public void run() {
-				if (counter++ > 5) {
-					this.cancel();
-					logger.info("done.");
-					return;
-				}
+//				if (counter++ > 5) {
+//					this.cancel();
+//					logger.info("done.");
+//					return;
+//				}
 				executor.submit(new LongRunningTask());
 			}
 		};
-		timer.schedule(task, 0, 5 * 1000);
+		timer.schedule(task, 0, 60 * 60 * 1000);
 	}
 
 }
