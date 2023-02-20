@@ -14,7 +14,8 @@ public class LongRunningTask implements Runnable {
         RestTemplate restTemplate = new RestTemplate();
 
         // Define the URL you want to send the request to
-        String url = "https://undertow-sample.onrender.com/?key=hello";
+        //String url = "https://undertow-sample.onrender.com/?key=hello";
+        String url = "https://undertow-sample-scheduler.onrender.com/?key=hello";
 
         // Send the HTTP GET request and receive the response as a string
         String response = restTemplate.getForObject(url, String.class);
