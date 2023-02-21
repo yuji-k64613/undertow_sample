@@ -27,7 +27,7 @@ public class Scheduler {
 			}
 		};
 		//timer.schedule(task, 0, 60 * 60 * 1000);
-		timer.schedule(task, 0, 15 * 60 * 1000);
+		timer.schedule(task, 0, 10 * 60 * 1000);
 	}
 
 }
