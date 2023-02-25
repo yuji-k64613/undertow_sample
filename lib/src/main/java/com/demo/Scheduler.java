@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class Scheduler {
 	final static Logger logger = LoggerFactory.getLogger(Scheduler.class);
-	private int counter = 0;
+	final static int T = 12 * 60 * 1000;
 	
 	public void schedule() {
 		Timer timer = new Timer();
@@ -18,16 +18,10 @@ public class Scheduler {
 
 		TimerTask task = new TimerTask() {
 			public void run() {
-//				if (counter++ > 5) {
-//					this.cancel();
-//					logger.info("done.");
-//					return;
-//				}
 				executor.submit(new LongRunningTask());
 			}
 		};
-		//timer.schedule(task, 0, 60 * 60 * 1000);
-		timer.schedule(task, 0, 10 * 60 * 1000);
+		timer.schedule(task, T / 2, T);
 	}
 
 }

@@ -12,6 +12,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
+import io.undertow.server.HttpServerExchange;
+import io.undertow.util.Headers;
 
 /*
  * ToDo
@@ -38,17 +40,18 @@ public class App {
 		ApplicationContext context = new AnnotationConfigApplicationContext(SpringMainConfig.class);
 		UserService userService = context.getBean(UserService.class);
 		AccountService accountService = userService.getAccountService();
-		logger.info(accountService.getName());
+//		logger.info(accountService.getName());
 
-		HttpHandler handler = null;
-		handler = new MainHttpHandler(handler);
-		handler = new ResponseHeadersHttpHandler(handler, "key", "value");
-//		handler = new AccessLogHandler(handler, new AccessLogReceiver() {
-//			@Override
-//			public void logMessage(String message) {
-//				logger.info("AccessLogHandler.logMessage()");
-//			}}, "combined", App.class.getClassLoader());
-//        handler = new AccessLogHandler(handler, logger::info, "combined", App.class.getClassLoader());
+		HttpHandler handler = new HttpHandler() {
+			@Override
+			public void handleRequest(HttpServerExchange exchange) throws Exception {
+				logger.info("Hello World");
+				exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
+				exchange.getResponseSender().send("Hello World");
+			}
+		};
+//		handler = new MainHttpHandler(handler);
+//		handler = new ResponseHeadersHttpHandler(handler, "key", "value");
 
 		Undertow server = Undertow.builder().addHttpListener(port, "0.0.0.0").setHandler(handler).build();
 		server.start();
