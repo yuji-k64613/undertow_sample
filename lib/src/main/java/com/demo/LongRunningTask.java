@@ -17,7 +17,7 @@ public class LongRunningTask implements Runnable {
 	
 	@Override
 	public void run() {
-		logger.info("begin");
+		logger.info("begin" + n);
 		
         // Create a new RestTemplate instance
         RestTemplate restTemplate = new RestTemplate();
@@ -30,7 +30,7 @@ public class LongRunningTask implements Runnable {
         // Send the HTTP GET request and receive the response as a string
         String response = restTemplate.getForObject(url, String.class);
         
-		logger.info("end: " + response);
+		logger.info("end" + n + ":" + response);
 		
 		n = 1 - n;
 	}
