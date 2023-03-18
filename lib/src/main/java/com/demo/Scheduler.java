@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
 
 public class Scheduler {
 	final static Logger logger = LoggerFactory.getLogger(Scheduler.class);
-	final static int T = 12 * 60 * 1000;
+	private int period = 0;
+	
+	public Scheduler() {
+		period = Integer.parseInt(System.getenv("PERIOD")) * 60 * 1000;
+	}
 	
 	public void schedule() {
 		Timer timer = new Timer();
@@ -21,7 +25,7 @@ public class Scheduler {
 				executor.submit(new LongRunningTask());
 			}
 		};
-		timer.schedule(task, T / 2, T);
+		timer.schedule(task, period / 2, period);
 	}
 
 }
