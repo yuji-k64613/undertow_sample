@@ -30,7 +30,7 @@ public class LongRunningTask implements Runnable {
         // Send the HTTP GET request and receive the response as a string
         String response = restTemplate.getForObject(url, String.class);
         
-		logger.info("end" + n + ":" + response);
+		logger.info("end" + n + ": " + response);
 		
 		n = 1 - n;
 	}

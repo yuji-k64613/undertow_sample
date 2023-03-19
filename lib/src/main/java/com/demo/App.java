@@ -42,12 +42,13 @@ public class App {
 		AccountService accountService = userService.getAccountService();
 //		logger.info(accountService.getName());
 
+		final String message = System.getenv("MESSAGE");
 		HttpHandler handler = new HttpHandler() {
 			@Override
 			public void handleRequest(HttpServerExchange exchange) throws Exception {
-				logger.info("Hello World");
+				logger.info(message);
 				exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-				exchange.getResponseSender().send("Hello World");
+				exchange.getResponseSender().send(message);
 			}
 		};
 //		handler = new MainHttpHandler(handler);
